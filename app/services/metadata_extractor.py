@@ -58,7 +58,12 @@ class MetadataExtractor:
 
             # Extract the JSON response
             try:
-                metadata = json.loads(response.choices[0].message.content)
+                # Clean up the response content by removing markdown code block and any whitespace
+                content = response.choices[0].message.content
+                # Remove markdown code block formatting if present
+                content = content.replace('```json', '').replace('```', '').strip()
+                
+                metadata = json.loads(content)
                 
                 # Ensure all required fields are present
                 required_fields = ['agreement_type', 'governing_law', 'geography', 'industry']
@@ -67,6 +72,12 @@ class MetadataExtractor:
                         metadata[field] = None
                 
                 return metadata
+                # return {
+                #     'agreement_type': metadata['agreement_type'],
+                #     'governing_law': metadata['governing_law'],
+                #     'industry': metadata['industry'],
+                #     'geography': metadata['geography']
+                # }
 
             except json.JSONDecodeError:
                 raise HTTPException(

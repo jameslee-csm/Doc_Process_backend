@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from langchain_community.utilities import SQLDatabase
 import os
 
 # Database URL - using SQLite for simplicity
@@ -26,3 +27,11 @@ def get_db():
 def init_db():
     """Initialize database tables"""
     Base.metadata.create_all(bind=engine)
+
+def get_langchain_db() -> SQLDatabase:
+    """Get SQLDatabase instance for langchain
+    
+    Returns:
+        SQLDatabase: A langchain SQLDatabase instance configured with the current engine
+    """
+    return SQLDatabase(engine=engine)

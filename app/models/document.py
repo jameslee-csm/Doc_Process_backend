@@ -14,7 +14,7 @@ class Document(Base):
     # Extracted metadata
     agreement_type = Column(String, index=True)  # NDA, MSA, etc.
     governing_law = Column(String, index=True)   # UAE, UK, etc.
-    jurisdiction = Column(String, index=True)     # Specific jurisdiction
+    # jurisdiction = Column(String, index=True)     # Specific jurisdiction
     industry = Column(String, index=True)        # Technology, Oil & Gas, etc.
     geography = Column(String, index=True)       # Middle East, Europe, etc.
     
